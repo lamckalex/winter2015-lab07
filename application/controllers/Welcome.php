@@ -64,6 +64,7 @@ class Welcome extends Application {
       $this->data['specialOrder'] = $orderRAW->getSpecial();
 
       $orderArray = array();
+      $oTotal = 0.00;
 
       $burgercount = 0;
       foreach($order as $burger)
@@ -72,7 +73,7 @@ class Welcome extends Application {
         $burgerData = array(
           'order' => $filename,
           'base' => $burger->patty,
-          'top' => $burger->topping,
+          'top' => implode(", ",$burger->topping),
           'sauce' => implode(", ",$burger->sauce)
         );
 
@@ -80,8 +81,8 @@ class Welcome extends Application {
         if(empty($burger->sauce))
         {
           $burgerData['sauce'] = "None";
-        //Check if topping is empty
         }
+        //Check if topping is empty
         if(empty($burger->topping))
         {
           $burgerData['top'] = "None";
@@ -108,12 +109,14 @@ class Welcome extends Application {
         //set burger count
         $burgerData['burgercount'] = $burgercount;
 
+        $burgerData['bTotal'] = $burger->bTotal;
+        $oTotal += $burger->bTotal;
         //push to orderArray
         array_push($orderArray, $burgerData);
       }
 
       $this->data['order'] = $orderArray;
-
+      $this->data['oTotal'] = $oTotal;
     	$this->data['pagebody'] = 'justone';
     	$this->render();
     }

@@ -26,7 +26,9 @@ class Menu extends CI_Model {
             $record->code = (string) $patty['code'];
             $record->name = (string) $patty;
             $record->price = (float) $patty['price'];
-            $patties[$record->code] = $record;
+            $this->patties[$record->code] = $record;
+            //var_dump($patties[(string) $patty['code']]);
+            //var_dump($patties);
         }
 
         // build a full list of patties - approach 2
@@ -35,7 +37,7 @@ class Menu extends CI_Model {
             $record->code = (string) $cheese['code'];
             $record->name = (string) $cheese;
             $record->price = (float) $cheese['price'];
-            $cheeses[$record->code] = $record;
+            $this->cheeses[$record->code] = $record;
         }
 
 
@@ -45,7 +47,7 @@ class Menu extends CI_Model {
             $record->code = (string) $topping['code'];
             $record->name = (string) $topping;
             $record->price = (float) $topping['price'];
-            $toppings[$record->code] = $record;
+            $this->toppings[$record->code] = $record;
         }
 
 
@@ -55,9 +57,8 @@ class Menu extends CI_Model {
             $record->code = (string) $sauce['code'];
             $record->name = (string) $sauce;
             $record->price = (float) $sauce['price'];
-            $sauces[$record->code] = $record;
+            $this->sauces[$record->code] = $record;
         }
-
     }
 
     // retrieve a patty record, perhaps for pricing

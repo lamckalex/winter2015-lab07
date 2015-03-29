@@ -9,8 +9,8 @@
   <p>{cheeseB}</p>
   <p>Topping: {top}</p>
   <p>Sauces: {sauce}</p>
-  <p>Burger Total: {btotal}</p>
+  <p>Burger Total: {bTotal}</p>
 
 {/order}
 
-<p>Order TOTAL: {ototal}</p>
+<p>Order TOTAL: {oTotal}</p>

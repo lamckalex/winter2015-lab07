@@ -24,22 +24,51 @@ class Order extends CI_Model {
 
         $this->order = array();
         foreach ($this->xml->burger as $burger) {
+            $bTotal = 0.00;
             $brgr = new stdClass();
             $brgr->patty = (string) $burger->patty['type'];
-          //  var_dump($menu->getPatty((string) $burger->patty['type']));
+            if($menu->getPatty($brgr->patty) != NULL)
+            {
+              $bTotal += $menu->getPatty($brgr->patty)->price;
+            }
+
             $brgr->cheeseT = (string) $burger->cheeses['top'];
+            if($menu->getCheese($brgr->cheeseT) != NULL)
+            {
+              $bTotal += $menu->getCheese($brgr->cheeseT)->price;
+            }
+
             $brgr->cheeseB = (string) $burger->cheeses['bottom'];
-            $brgr->topping = (string) $burger->topping['type'];
+            if($menu->getCheese($brgr->cheeseB) != NULL)
+            {
+              $bTotal += $menu->getCheese($brgr->cheeseB)->price;
+            }
+
+            $brgr->topping = array();
+
+            foreach($burger->topping as $toppings)
+            {
+              array_push($brgr->topping, $toppings['type']);
+              if($menu->getTopping((string)$toppings['type']) != NULL)
+              {
+                $bTotal += $menu->getTopping((string)$toppings['type'])->price;
+              }
+            }
+
             $brgr->sauce = array();
 
             foreach($burger->sauce as $sauces)
             {
               array_push($brgr->sauce, $sauces['type']);
+              if($menu->getSauce((string)$sauces['type']) != NULL)
+              {
+                $bTotal += $menu->getSauce((string)$sauces['type'])->price;
+              }
             }
 
+            $brgr->bTotal = $bTotal;
             array_push($this->order, $brgr);
         }
-        //var_dump($order[0]);
     }
 
     function getOrder()
